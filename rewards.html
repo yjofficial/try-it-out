@@ -1,0 +1,290 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>e-Reward</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #F9FBFF;
+            font-family: 'Poppins', sans-serif;
+        }
+        .container {
+            padding: 20px;
+        }
+        .navbar {
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added shadow */
+            justify-content: center; /* Center the content of the navbar */
+        }
+        .navbar-brand {
+            font-weight: bold; /* Make the text bold */
+        }
+        .navbar .fa-user-circle {
+            font-size: 1.5rem;
+        }
+        .header .fa-users {
+            font-size: 1.5rem;
+        }
+        .card {
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        .card-header {
+            background-color: #000;
+            color: #fff;
+            text-align: center;
+        }
+        .card-body {
+            text-align: center;
+        }
+        .card-progress {
+            background-color: #d3d3d3;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .card-progress .progress-bar {
+            background-color: #000;
+        }
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #fff;
+            box-shadow: 0 -1px 5px rgba(0,0,0,0.1);
+        }
+        .bottom-nav a {
+            color: #333;
+            text-align: center;
+            padding: 10px;
+            display: block;
+            text-decoration: none;
+        }
+        .bottom-nav a.active {
+            color: #000;
+        }
+        .bottom-nav a .fa {
+            font-size: 1.2rem;
+        }
+        .rewards-card {
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+        .rewards-card-header {
+            background-color: #000;
+            color: #fff;
+            padding: 10px;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            text-align: center;
+        }
+        .rewards-card-body {
+            padding: 20px;
+        }
+        .stamps-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            background-image: url('images/coffee.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            padding: 20px; 
+            border-radius: 15px;
+        }
+        .stamp {
+            width: 40px;
+            height: 40px;
+            background-color: #e0e0e0;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            color: #999;
+            border: 2px solid #4e3b2e;
+        }
+        .stamp.stamped {
+            background-color: #f4e1d2; /* Light sand */
+            color: #4e3b2e; /* Rich brown for text */
+            border: 2px solid #4e3b2e;
+        }
+        .voucher-message {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .btn {
+            color: #000;
+        }
+        .btn-dark {
+            background-color: #000;
+            color: #fff;
+        }
+        .btn-inactive {
+            background-color: #e0e0e0;
+            color: #999;
+        }
+        .btn-inactive:hover {
+            cursor: default;
+            background-color: #e0e0e0;
+            color: #999;
+        }
+        .carousel-inner {
+            min-height: 300px;
+        }
+        .carousel-control-prev-icon::before, .carousel-control-next-icon::before {
+            content: '';
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background-size: 50px 50px;
+        }
+        .carousel-control-prev-icon::before {
+            background-image: url('images/leftarrow.png'); /* Custom left arrow image */
+        }
+        .carousel-control-next-icon::before {
+            background-image: url('images/rightarrow.png'); /* Custom right arrow image */
+        }
+        .carousel-item {
+            height: 100%; /* Ensuring same height for carousel items */
+        }
+        .carousel-item > div {
+            height: 100%; /* Ensuring same height for inner content */
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <span class="navbar-brand">E-Rewards</span>
+        </div>
+    </nav>
+    <div class="container">
+        <p>Last update time 01:59:59</p>
+        <div class="d-flex justify-content-around mb-3">
+            <button id="stampBtn" class="btn btn-dark">Stamp</button>
+            <button id="voucherBtn" class="btn btn-inactive">Voucher</button>
+        </div>
+        <div id="rewardsCard" class="rewards-card" data-bs-toggle="modal" data-bs-target="#infoModal">
+            <div class="rewards-card-header">
+                Cosmic Coffee
+            </div>
+            <div class="rewards-card-body text-center">
+                <div class="stamps-container">
+                    <div class="stamp stamped"><i class="fas fa-coffee"></i></div>
+                    <div class="stamp stamped"><i class="fas fa-coffee"></i></div>
+                    <div class="stamp stamped"><i class="fas fa-coffee"></i></div>
+                    <div class="stamp stamped"><i class="fas fa-coffee"></i></div>
+                    <div class="stamp"><i class="fas fa-coffee"></i></div>
+                    <div class="stamp"><i class="fas fa-coffee"></i></div>
+                    <div class="stamp"><i class="fas fa-coffee"></i></div>
+                    <div class="stamp"><i class="fas fa-coffee"></i></div>
+                </div>
+                <div class="row mt-3 text-black">
+                    <div class="col">Name</div>
+                    <div class="col text-end">To be redeemed</div>
+                </div>
+                <div class="row text-black">
+                    <div class="col"><strong>Joash</strong></div>
+                    <div class="col text-end"><strong>0</strong></div>
+                    <p style="opacity: 0.6;">Click me for more information!</p>
+                </div>
+            </div>
+        </div>
+        <div id="voucherMessage" class="voucher-message">
+            <h3>No vouchers at present</h3>
+            <p style="opacity: 0.6;">Join our other reward programs and stay tuned to our updates!</p>
+        </div>
+    </div>
+    <div class="bottom-nav d-flex justify-content-around">
+        <a href="index.html">
+            <i class="fas fa-home"></i>
+            <div>Home</div>
+        </a>
+        <a href="rewards.html" class="active">
+            <i class="fas fa-gift"></i>
+            <div>e-Reward</div>
+        </a>
+    </div>
+    <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="infoModalLabel">Card Info</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="infoCarousel" class="carousel slide" data-bs-ride="false">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="p-3">
+                                    <h2>Collect stamps for cool rewards!</h2>
+                                    <p>Spend $5 to get 1 stamp.</p>
+                                    <ol>
+                                        <li>Earn 1 stamp for every coffee purchased.</li>
+                                        <li>Collect 8 stamps to receive a free coffee upon your next visit.</li>
+                                        <li>This card, stamps, and rewards are valid until 10/10/2024.</li>
+                                        <li>Stamps and rewards cannot be exchanged, refunded, replaced, or redeemed for cash.</li>
+                                        <li>The Company reserves the right of final decisions in case of any disputes.</li>
+                                    </ol>
+                                    <hr>
+                                    <h6>You can add this pass to your Mobile Wallet by tapping the wallet button.</h6>
+                                    <button class="btn btn-dark">Add to Apple Wallet</button>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="text-center p-3">
+                                    <h5>You can apply this reward by showing the QR code to the merchant.</h5>
+                                    <img src="images/qr.png" alt="QR Code" style="width: 150px; height: 150px;">
+                                    <hr>
+                                    <p>Reward List</p>
+                                    <p><strong>1. Free coffee</strong></p>
+                                    <p>Required stamps: 8</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#infoCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#infoCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('voucherBtn').addEventListener('click', function() {
+            document.getElementById('rewardsCard').style.display = 'none';
+            document.getElementById('voucherMessage').style.display = 'block';
+            this.classList.add('btn-dark');
+            this.classList.remove('btn-inactive');
+            document.getElementById('stampBtn').classList.add('btn-inactive');
+            document.getElementById('stampBtn').classList.remove('btn-dark');
+        });
+
+        document.getElementById('stampBtn').addEventListener('click', function() {
+            document.getElementById('rewardsCard').style.display = 'block';
+            document.getElementById('voucherMessage').style.display = 'none';
+            this.classList.add('btn-dark');
+            this.classList.remove('btn-inactive');
+            document.getElementById('voucherBtn').classList.add('btn-inactive');
+            document.getElementById('voucherBtn').classList.remove('btn-dark');
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
